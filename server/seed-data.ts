@@ -1,0 +1,133 @@
+export type SeedProduct = {
+  id: string;
+  sortOrder: number;
+  slug: string;
+  name: string;
+  priceInr: number;
+  imageUrl: string;
+  category: string;
+  productType: "outfit" | "accessory";
+  description: string;
+  isFeatured: boolean;
+  isActive: boolean;
+};
+
+export const seedProducts: SeedProduct[] = [
+  {
+    id: "52d671be-c3f9-4f76-a673-c9f979f816d0",
+    sortOrder: 1,
+    slug: "tiger-and-triumph",
+    name: "Tiger and Triumph",
+    priceInr: 2999,
+    imageUrl: "/products/product-1.jpg",
+    category: "Premium",
+    productType: "outfit",
+    description: "A statement Indo-Western silhouette with sharp tailoring and celebratory energy.",
+    isFeatured: true,
+    isActive: true,
+  },
+  {
+    id: "d36eec73-d7d8-4924-9d7b-3645e17a02e2",
+    sortOrder: 2,
+    slug: "lotus-and-leather",
+    name: "Lotus and Leather",
+    priceInr: 15000,
+    imageUrl: "/products/product-2.jpg",
+    category: "Luxury",
+    productType: "outfit",
+    description: "A bold fusion look that balances traditional detailing with a structured modern edge.",
+    isFeatured: true,
+    isActive: true,
+  },
+  {
+    id: "d4efef1d-a07e-4814-bf66-4b4859f3d420",
+    sortOrder: 3,
+    slug: "peacock-and-power",
+    name: "Peacock and Power",
+    priceInr: 12200,
+    imageUrl: "/products/product-3.jpg",
+    category: "Premium",
+    productType: "outfit",
+    description: "Rich jewel tones and confident styling for festive evenings and standout occasions.",
+    isFeatured: false,
+    isActive: true,
+  },
+  {
+    id: "50240380-7dd7-433f-8dc7-fb6409fb6d45",
+    sortOrder: 4,
+    slug: "regal-fusion",
+    name: "Regal Fusion",
+    priceInr: 7599,
+    imageUrl: "/products/product-4.jpg",
+    category: "Classic",
+    productType: "outfit",
+    description: "An elegant cross-cultural design with a refined ceremonial finish.",
+    isFeatured: false,
+    isActive: true,
+  },
+  {
+    id: "a0a7e755-8b6b-4d26-b68f-7e537b3ca277",
+    sortOrder: 5,
+    slug: "crimson-confluence",
+    name: "Crimson Confluence",
+    priceInr: 4500,
+    imageUrl: "/products/product-5.jpg",
+    category: "Luxury",
+    productType: "outfit",
+    description: "A celebratory crimson ensemble created for intimate events and festive gatherings.",
+    isFeatured: false,
+    isActive: true,
+  },
+  {
+    id: "af26d0ea-2d88-422d-bbc4-c1e7eaf0db64",
+    sortOrder: 6,
+    slug: "ivory-valor",
+    name: "Ivory Valor",
+    priceInr: 4000,
+    imageUrl: "/products/product-6.jpg",
+    category: "Luxury",
+    productType: "outfit",
+    description: "A clean ivory look with subtle heritage touches and understated luxury.",
+    isFeatured: false,
+    isActive: true,
+  },
+  {
+    id: "f20a24ef-9e6b-434a-bb31-b9704c0f2865",
+    sortOrder: 7,
+    slug: "the-royal-vision",
+    name: "The Royal Vision",
+    priceInr: 699,
+    imageUrl: "/products/product-7.jpg",
+    category: "Premium",
+    productType: "accessory",
+    description: "A lightweight finishing accessory designed to elevate festive and cocktail looks.",
+    isFeatured: false,
+    isActive: true,
+  },
+  {
+    id: "5ddf75b2-a08d-4147-a8c3-1cf5008d33ee",
+    sortOrder: 8,
+    slug: "the-maharaja-knot",
+    name: "The Maharaja Knot",
+    priceInr: 2300,
+    imageUrl: "/products/product-8.jpg",
+    category: "Classic",
+    productType: "accessory",
+    description: "A heritage-inspired accent piece with regal character and modern versatility.",
+    isFeatured: false,
+    isActive: true,
+  },
+  {
+    id: "63ec2e9c-b5d5-43ce-8096-ce0f44445b5d",
+    sortOrder: 9,
+    slug: "the-lotus-bind",
+    name: "The Lotus Bind",
+    priceInr: 5800,
+    imageUrl: "/products/product-9.jpg",
+    category: "Luxury",
+    productType: "accessory",
+    description: "A premium handcrafted accessory with intricate styling for special occasions.",
+    isFeatured: true,
+    isActive: true,
+  },
+];
