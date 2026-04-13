@@ -20,6 +20,9 @@
     "seed:neo4j": "tsx server/scripts/seed.ts",
     "start": "node server/dist/index.js"
   },
+  "optionalDependencies": {
+  "@rollup/rollup-linux-x64-gnu": "4.57.1"
+},
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
