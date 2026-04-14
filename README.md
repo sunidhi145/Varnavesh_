@@ -128,8 +128,14 @@ The seed script:
 
 ## Deployment Notes
 
+- Netlify should be used for the frontend build only.
+- This repo now includes [`netlify.toml`](./netlify.toml) with:
+  - build command: `npm run build:client`
+  - publish directory: `dist`
+  - SPA redirect from `/*` to `/index.html`
 - The frontend can still be deployed to Vercel.
 - The backend is better deployed to a long-running Node host such as Railway, Render, Fly.io, or a VPS.
+- Netlify does not run the Express server in [`server/index.ts`](./server/index.ts), so API routes, Stripe checkout, uploads, and Neo4j access must come from a separately deployed backend.
 - Vercel serverless functions are not the best fit for Neo4j because Bolt connections and cold starts are a rougher match than a persistent Express server.
 - If you deploy frontend and backend separately, set:
   - `FRONTEND_ORIGIN` on the backend
