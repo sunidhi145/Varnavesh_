@@ -197,5 +197,4 @@ const Shop = () => {
     </section>
   );
 };
-
 export default Shop;

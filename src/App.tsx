@@ -31,5 +31,4 @@ const App = () => (
     </CartProvider>
   </QueryClientProvider>
 );
-
 export default App;

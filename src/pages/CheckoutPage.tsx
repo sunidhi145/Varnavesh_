@@ -237,5 +237,4 @@ const CheckoutPage = () => {
     </SiteLayout>
   );
 };
-
 export default CheckoutPage;

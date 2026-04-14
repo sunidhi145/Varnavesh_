@@ -162,5 +162,4 @@ const CartPage = () => {
     </SiteLayout>
   );
 };
-
 export default CartPage;

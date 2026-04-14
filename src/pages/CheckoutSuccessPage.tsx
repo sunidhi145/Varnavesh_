@@ -144,5 +144,4 @@ const CheckoutSuccessPage = () => {
     </SiteLayout>
   );
 };
-
 export default CheckoutSuccessPage;
