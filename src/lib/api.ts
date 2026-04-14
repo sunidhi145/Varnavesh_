@@ -7,6 +7,7 @@ import {
   type CustomDesignFormValues,
   validateReferenceFiles,
 } from "@/lib/validators";
+import { seedProducts } from "@/lib/seed-products";
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "").replace(/\/$/, "");
 
@@ -41,6 +42,13 @@ export type ProductRecord = {
   created_at: string;
   updated_at: string;
 };
+
+function getSeedProducts() {
+  return seedProducts.map((product) => ({
+    ...product,
+    image_url: resolveAssetUrl(product.image_url || seedProductImageBySlug[product.slug] || ""),
+  }));
+}
 
 export type CartLineItemPayload = {
   productId: string;
@@ -178,12 +186,21 @@ async function parseResponse<T>(response: Response, fallbackMessage: string): Pr
 }
 
 export async function fetchProducts() {
-  const response = await fetch(apiUrl("/api/products"));
-  const payload = await parseResponse<ProductsResponse>(response, "We couldn't load the collection right now.");
-  return payload.products.map((product) => ({
-    ...product,
-    image_url: resolveAssetUrl(product.image_url || seedProductImageBySlug[product.slug] || ""),
-  }));
+  try {
+    const response = await fetch(apiUrl("/api/products"));
+    const payload = await parseResponse<ProductsResponse>(response, "We couldn't load the collection right now.");
+
+    if (!Array.isArray(payload.products) || payload.products.length === 0) {
+      return getSeedProducts();
+    }
+
+    return payload.products.map((product) => ({
+      ...product,
+      image_url: resolveAssetUrl(product.image_url || seedProductImageBySlug[product.slug] || ""),
+    }));
+  } catch {
+    return getSeedProducts();
+  }
 }
 
 export async function createCheckoutSession(customer: CheckoutFormPayload, items: CartLineItemPayload[]) {
