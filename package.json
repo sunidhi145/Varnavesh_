@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
@@ -13,6 +13,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "tsc -b && vite build",
     "build:server": "tsc -p tsconfig.server.json",
+    "build:vercel": "npm run build:client",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

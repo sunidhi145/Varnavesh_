@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import SiteLayout from "@/components/SiteLayout";
-import { createCheckoutSession, fetchProducts } from "@/lib/api";
+import { backendRequiredMessage, createCheckoutSession, fetchProducts, isBackendConfigured } from "@/lib/api";
 import { useCart } from "@/lib/cart";
 import { checkoutFormSchema, getFieldErrors, type CheckoutFormValues } from "@/lib/validators";
 
@@ -195,10 +195,21 @@ const CheckoutPage = () => {
                       {fieldErrors.notes ? <p className="mt-1 text-sm text-destructive">{fieldErrors.notes}</p> : null}
                     </div>
 
-                    <Button type="submit" disabled={isSubmitting || isLoading} className="w-full bg-primary hover:bg-primary/90">
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || isLoading || !isBackendConfigured}
+                      className="w-full bg-primary hover:bg-primary/90"
+                    >
                       <CreditCard className="mr-2 h-4 w-4" />
-                      {isSubmitting ? "Redirecting to Stripe..." : "Pay with Stripe Test Checkout"}
+                      {!isBackendConfigured
+                        ? "Backend Setup Required"
+                        : isSubmitting
+                          ? "Redirecting to Stripe..."
+                          : "Pay with Stripe Test Checkout"}
                     </Button>
+                    {!isBackendConfigured ? (
+                      <p className="text-sm text-muted-foreground">{backendRequiredMessage}</p>
+                    ) : null}
                   </form>
                 </CardContent>
               </Card>

@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { submitContact } from "@/lib/api";
+import { backendRequiredMessage, isBackendConfigured, submitContact } from "@/lib/api";
 import { contactFormSchema, getFieldErrors, type ContactFormValues } from "@/lib/validators";
 import contactBg from "@/assets/contact-bg.jpg";
 import contactOverlay from "@/assets/contact-overlay.png";
@@ -182,11 +182,14 @@ const Contact = () => {
 
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !isBackendConfigured}
                   className="w-full bg-primary transition-all hover:scale-105 hover:bg-primary/90"
                 >
-                  {isSubmitting ? "Submitting..." : "Submit"}
+                  {!isBackendConfigured ? "Backend Setup Required" : isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
+                {!isBackendConfigured ? (
+                  <p className="text-sm text-muted-foreground">{backendRequiredMessage}</p>
+                ) : null}
               </form>
             </CardContent>
           </Card>

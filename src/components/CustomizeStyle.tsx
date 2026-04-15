@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { submitCustomDesignRequest } from "@/lib/api";
+import { backendRequiredMessage, isBackendConfigured, submitCustomDesignRequest } from "@/lib/api";
 import {
   customDesignFormSchema,
   getFieldErrors,
@@ -255,9 +255,12 @@ const CustomizeStyle = () => {
                   />
                 </div>
 
-                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
-                  {isSubmitting ? "Submitting..." : "Submit Design Request"}
+                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting || !isBackendConfigured}>
+                  {!isBackendConfigured ? "Backend Setup Required" : isSubmitting ? "Submitting..." : "Submit Design Request"}
                 </Button>
+                {!isBackendConfigured ? (
+                  <p className="text-sm text-muted-foreground">{backendRequiredMessage}</p>
+                ) : null}
               </form>
             </DialogContent>
           </Dialog>

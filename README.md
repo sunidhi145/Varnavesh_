@@ -34,7 +34,7 @@ VARNAVESH now uses:
 
 ## Environment Variables
 
-Create a `.env` file in the project root using this structure:
+Create a `.env` file in the project root using [`.env.example`](./.env.example) as the starting point:
 
 ```env
 PORT=4000
@@ -128,19 +128,23 @@ The seed script:
 
 ## Deployment Notes
 
-- Netlify should be used for the frontend build only.
-- This repo now includes [`netlify.toml`](./netlify.toml) with:
-  - build command: `npm run build:client`
-  - publish directory: `dist`
-  - SPA redirect from `/*` to `/index.html`
-- The frontend can still be deployed to Vercel.
-- The backend is better deployed to a long-running Node host such as Railway, Render, Fly.io, or a VPS.
-- Netlify does not run the Express server in [`server/index.ts`](./server/index.ts), so API routes, Stripe checkout, uploads, and Neo4j access must come from a separately deployed backend.
-- Vercel serverless functions are not the best fit for Neo4j because Bolt connections and cold starts are a rougher match than a persistent Express server.
+- Vercel should be used for the frontend build only.
+- This repo now includes [`vercel.json`](./vercel.json) with:
+  - install command: `npm install`
+  - build command: `npm run build:vercel`
+  - output directory: `dist`
+  - SPA rewrite from `/*` to `/index.html`
+- The Node engine is pinned to `20.x` in [`package.json`](./package.json) and `.nvmrc`, which is a currently supported Vercel version.
+- The backend in [`server/index.ts`](./server/index.ts) is still a long-running Express + Neo4j service and should be hosted separately on Railway, Render, Fly.io, a VPS, or another persistent Node platform.
+- Vercel serverless functions are not the best fit for this backend because Neo4j Bolt connections, file uploads, and Stripe checkout flows are better handled by a persistent server.
+- The frontend remains deploy-safe on Vercel even without the backend:
+  - product browsing falls back to the bundled seed catalog
+  - checkout, contact, consultation, and custom design flows show a clear backend-setup message instead of failing with broken API calls
 - If you deploy frontend and backend separately, set:
-  - `FRONTEND_ORIGIN` on the backend
-  - `PUBLIC_BASE_URL` on the backend
-  - `VITE_API_BASE_URL` on the frontend
+  - `FRONTEND_ORIGIN` on the backend to your Vercel site URL
+  - `PUBLIC_BASE_URL` on the backend to the backend origin
+  - `VITE_API_BASE_URL` on the frontend to the backend origin
+- Netlify can still host the frontend, and [`netlify.toml`](./netlify.toml) remains configured for that static-only use case.
 
 ## Storage Tradeoffs After Moving to Neo4j
 

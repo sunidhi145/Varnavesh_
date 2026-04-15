@@ -10,6 +10,11 @@ import {
 import { seedProducts } from "@/lib/seed-products";
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "").replace(/\/$/, "");
+const BACKEND_REQUIRED_MESSAGE =
+  "Checkout, forms, and uploads need a separately hosted backend. Set VITE_API_BASE_URL to that backend before deploying the frontend.";
+
+export const backendRequiredMessage = BACKEND_REQUIRED_MESSAGE;
+export const isBackendConfigured = Boolean(API_BASE_URL) || !import.meta.env.PROD;
 
 const seedProductImageBySlug: Record<string, string> = {
   "tiger-and-triumph": "/products/product-1.jpg",
@@ -120,7 +125,15 @@ type ConfirmPaymentResponse = {
 };
 
 function apiUrl(path: string) {
-  return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+  if (API_BASE_URL) {
+    return `${API_BASE_URL}${path}`;
+  }
+
+  if (!import.meta.env.PROD) {
+    return path;
+  }
+
+  throw new Error(BACKEND_REQUIRED_MESSAGE);
 }
 
 function resolveAssetUrl(url: string) {

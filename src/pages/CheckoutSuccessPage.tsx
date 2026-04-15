@@ -5,7 +5,7 @@ import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SiteLayout from "@/components/SiteLayout";
-import { confirmOrderPayment } from "@/lib/api";
+import { backendRequiredMessage, confirmOrderPayment, isBackendConfigured } from "@/lib/api";
 import { useCart } from "@/lib/cart";
 
 const currencyFormatter = new Intl.NumberFormat("en-IN", {
@@ -22,7 +22,7 @@ const CheckoutSuccessPage = () => {
   const { data: order, error, isLoading } = useQuery({
     queryKey: ["order-confirmation", sessionId],
     queryFn: () => confirmOrderPayment(sessionId),
-    enabled: Boolean(sessionId),
+    enabled: Boolean(sessionId) && isBackendConfigured,
     retry: false,
   });
 
@@ -49,6 +49,13 @@ const CheckoutSuccessPage = () => {
                   <p className="text-muted-foreground">We could not find a Stripe checkout session in the URL.</p>
                   <Button asChild className="bg-primary hover:bg-primary/90">
                     <Link to="/cart">Return to Cart</Link>
+                  </Button>
+                </div>
+              ) : !isBackendConfigured ? (
+                <div className="space-y-4 text-center">
+                  <p className="text-muted-foreground">{backendRequiredMessage}</p>
+                  <Button asChild className="bg-primary hover:bg-primary/90">
+                    <Link to="/checkout">Back to Checkout</Link>
                   </Button>
                 </div>
               ) : isLoading ? (
