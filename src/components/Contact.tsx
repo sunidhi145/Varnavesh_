@@ -203,10 +203,10 @@ const Contact = () => {
                     <div>
                       <p className="text-sm text-muted-foreground">Email</p>
                       <a
-                        href="mailto:snehal.23bce7455@vitapstudent.ac.in"
+                        href="mailto:sunidhi.23bce8853@vitapstudent.ac.in"
                         className="text-foreground transition-colors hover:text-primary"
                       >
-                        snehal.23bce7455@vitapstudent.ac.in
+                        sunidhi.23bce8853@vitapstudent.ac.in
                       </a>
                     </div>
                   </div>
