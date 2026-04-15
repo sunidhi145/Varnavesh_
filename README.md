@@ -52,6 +52,8 @@ VITE_API_BASE_URL=
 
 For separate frontend/backend deployment, set `VITE_API_BASE_URL` to your backend origin, for example `https://api.yourdomain.com`.
 
+`FRONTEND_ORIGIN` can be a comma-separated list when you need both your Vercel production URL and preview URL patterns allowed by CORS.
+
 ## Windows Local Setup
 
 ### 1. Install dependencies
@@ -145,6 +147,26 @@ The seed script:
   - `PUBLIC_BASE_URL` on the backend to the backend origin
   - `VITE_API_BASE_URL` on the frontend to the backend origin
 - Netlify can still host the frontend, and [`netlify.toml`](./netlify.toml) remains configured for that static-only use case.
+
+## Railway Backend Deploy
+
+- This repo includes [`railway.json`](./railway.json) so Railway builds only the backend TypeScript and starts the compiled Express server.
+- Railway build command: `npm install && npm run build:railway`
+- Railway start command: `npm run start:railway`
+- Add these Railway environment variables:
+  - `PORT=4000`
+  - `FRONTEND_ORIGIN=https://your-vercel-app.vercel.app`
+  - `PUBLIC_BASE_URL=https://your-railway-backend.up.railway.app`
+  - `NEO4J_URI=...`
+  - `NEO4J_USERNAME=...`
+  - `NEO4J_PASSWORD=...`
+  - `NEO4J_DATABASE=neo4j`
+  - `STRIPE_SECRET_KEY=...`
+  - `STRIPE_CURRENCY=inr`
+- If you use a custom Vercel domain too, set `FRONTEND_ORIGIN` as a comma-separated list, for example:
+  - `https://varnavesh.vercel.app,https://www.varnavesh.com`
+- After Railway is live, set `VITE_API_BASE_URL` in Vercel to the Railway backend URL and redeploy the frontend.
+- Uploaded reference images currently use local disk storage, so Railway redeploys can remove old uploaded files. Move uploads to object storage later if you need durable file retention.
 
 ## Storage Tradeoffs After Moving to Neo4j
 

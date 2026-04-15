@@ -11,10 +11,16 @@ function readRequiredEnv(name: string) {
 }
 
 const parsedPort = Number(process.env.PORT ?? "4000");
+const rawFrontendOrigin = process.env.FRONTEND_ORIGIN ?? "http://localhost:8080";
+const allowedFrontendOrigins = rawFrontendOrigin
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/$/, ""))
+  .filter(Boolean);
 
 export const serverConfig = {
   port: Number.isFinite(parsedPort) ? parsedPort : 4000,
-  frontendOrigin: process.env.FRONTEND_ORIGIN ?? "http://localhost:8080",
+  frontendOrigin: allowedFrontendOrigins[0] ?? "http://localhost:8080",
+  allowedFrontendOrigins,
   publicBaseUrl: (process.env.PUBLIC_BASE_URL ?? `http://localhost:${process.env.PORT ?? "4000"}`).replace(/\/$/, ""),
   uploadsDir: path.resolve(process.cwd(), process.env.UPLOADS_DIR ?? "storage/uploads"),
   stripe: {

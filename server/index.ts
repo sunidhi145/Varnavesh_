@@ -51,7 +51,9 @@ ensureDirectoryExists(serverConfig.uploadsDir);
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || origin === serverConfig.frontendOrigin) {
+      const normalizedOrigin = origin?.replace(/\/$/, "");
+
+      if (!normalizedOrigin || serverConfig.allowedFrontendOrigins.includes(normalizedOrigin)) {
         callback(null, true);
         return;
       }

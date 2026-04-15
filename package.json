@@ -14,12 +14,14 @@
     "build:client": "tsc -b && vite build",
     "build:server": "tsc -p tsconfig.server.json",
     "build:vercel": "npm run build:client",
+    "build:railway": "npm run build:server",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "seed:neo4j": "tsx server/scripts/seed.ts",
-    "start": "node server/dist/index.js"
+    "start": "node server/dist/index.js",
+    "start:railway": "npm run start"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.57.1"
